@@ -11,7 +11,7 @@ export default function App() {
       <footer className="site-footer">
         <span>BananaShopPro</span>
         <Link to="/impressum">Impressum</Link>
-        <span>Reduzierter Demo-Shop</span>
+        <span>Trusted Shop</span>
       </footer>
     </div>
   );
