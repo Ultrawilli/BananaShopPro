@@ -14,7 +14,10 @@ export default function Header() {
 
   return (
     <header className="site-header">
-      <Link to="/" className="logo">BananaShopPro</Link>
+      <Link to="/" className="logo">
+        <img className="shop-logo" src="/images/logo.png" alt="" onError={(event) => { event.currentTarget.style.display = 'none'; }} />
+        <span>Banana Shop Pro</span>
+      </Link>
       <nav className="main-nav">
         <NavLink to="/">Shop</NavLink>
         <NavLink to="/cart">Cart ({count})</NavLink>
