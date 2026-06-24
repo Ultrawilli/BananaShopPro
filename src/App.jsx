@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import Header from './components/Header.jsx';
 
 export default function App() {
@@ -10,6 +10,7 @@ export default function App() {
       </main>
       <footer className="site-footer">
         <span>BananaShopPro</span>
+        <Link to="/impressum">Impressum</Link>
         <span>Reduzierter Demo-Shop</span>
       </footer>
     </div>
