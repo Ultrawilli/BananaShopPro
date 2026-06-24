@@ -12,6 +12,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import OrdersPage from './pages/OrdersPage.jsx';
 import BackofficePage from './pages/BackofficePage.jsx';
 import AdminOrdersPage from './pages/AdminOrdersPage.jsx';
+import ImprintPage from './pages/ImprintPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import './styles.css';
 
@@ -28,6 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path="checkout" element={<CheckoutPage />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="orders" element={<OrdersPage />} />
+              <Route path="impressum" element={<ImprintPage />} />
               <Route path="admin" element={<Navigate to="/admin/products" replace />} />
               <Route path="admin/products" element={<BackofficePage />} />
               <Route path="admin/orders" element={<AdminOrdersPage />} />
