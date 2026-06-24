@@ -10,7 +10,7 @@ import CartPage from './pages/CartPage.jsx';
 import CheckoutPage from './pages/CheckoutPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import OrdersPage from './pages/OrdersPage.jsx';
-import AdminProductsPage from './pages/AdminProductsPage.jsx';
+import BackofficePage from './pages/BackofficePage.jsx';
 import AdminOrdersPage from './pages/AdminOrdersPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import './styles.css';
@@ -29,7 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path="login" element={<LoginPage />} />
               <Route path="orders" element={<OrdersPage />} />
               <Route path="admin" element={<Navigate to="/admin/products" replace />} />
-              <Route path="admin/products" element={<AdminProductsPage />} />
+              <Route path="admin/products" element={<BackofficePage />} />
               <Route path="admin/orders" element={<AdminOrdersPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
