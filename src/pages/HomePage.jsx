@@ -40,7 +40,7 @@ export default function HomePage() {
             <div className="product-meta"><b>{formatCurrency(p.price)}</b><span>{p.stock} verfügbar</span></div>
             <div className="button-row">
               <Link className="button ghost" to={'/product/' + p.id}>Ansehen</Link>
-              <button className="button" onClick={() => add(p)}>Warenkorb</button>
+              <button className="button" onClick={() => add(p)}>In den Warenkorb</button>
             </div>
           </article>
         ))}
