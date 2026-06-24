@@ -10,7 +10,7 @@ export default function HomePage() {
   const { add } = useCart();
 
   useEffect(() => {
-    supabase.from('products').select('*, categories(name, slug)').order('name').then(({ data }) => {
+    supabase.from('products').select('*, categories(name, slug)').order('sort_order').then(({ data }) => {
       setProducts(data || []);
     });
   }, []);
@@ -23,7 +23,7 @@ export default function HomePage() {
   return (
     <>
       <section className="hero">
-        <p className="eyebrow">Hier bekommt wirklich jede Person die Banane, die sie verdient.</p>
+        <p className="eyebrow">Hier findest du die Banane die du verdienst!</p>
         <h1>Eine Banane ist eine Banane ist eine Banane.</h1>
         <p>"Die Banane ist eine Hoffnung für viele und eine Notwendigkeit für uns alle." (Konrad Adenauer)</p>
       </section>
