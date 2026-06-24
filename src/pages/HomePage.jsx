@@ -23,9 +23,9 @@ export default function HomePage() {
   return (
     <>
       <section className="hero">
-        <p className="eyebrow">Minimaler Online-Shop</p>
-        <h1>Bananen kaufen, ohne Ablenkung.</h1>
-        <p>Produktdaten kommen direkt aus Supabase.</p>
+        <p className="eyebrow">Hier bekommt wirklich jede Person die Banane, die sie verdient.</p>
+        <h1>Eine Banane ist eine Banane ist eine Banane.</h1>
+        <p>"Die Banane ist eine Hoffnung für viele und eine Notwendigkeit für uns alle." (Konrad Adenauer)</p>
       </section>
       <section className="filters">
         <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Produkt suchen" />
