@@ -4,6 +4,13 @@ import { supabase } from '../lib/supabaseClient';
 import { formatCurrency, formatDate } from '../lib/format';
 import { useAuth } from '../components/AuthProvider.jsx';
 
+const statusLabels = {
+  paid: 'Bezahlt',
+  processing: 'In Bearbeitung',
+  shipped: 'Versendet',
+  cancelled: 'Storniert'
+};
+
 export default function OrdersPage() {
   const { user } = useAuth();
   const [orders, setOrders] = useState([]);
@@ -22,6 +29,8 @@ export default function OrdersPage() {
       {orders.map((order) => (
         <article className="order-card" key={order.id}>
           <h2>{formatDate(order.created_at)}</h2>
+          <p><b>Status:</b> {statusLabels[order.status] || order.status}</p>
+          {order.delivery_address && <p><b>Lieferadresse:</b><br />{order.delivery_address}</p>}
           <ul>{order.order_items?.map((item) => <li key={item.id}>{item.quantity} × {item.product_name}</li>)}</ul>
           <b>{formatCurrency(order.total)}</b>
         </article>
