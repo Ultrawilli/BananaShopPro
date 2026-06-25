@@ -17,6 +17,8 @@ export default function ProductPage() {
 
   if (!product) return <section className="panel">Produkt wird geladen...</section>;
 
+  const soldOut = Number(product.stock) <= 0;
+
   return (
     <section className="detail-layout">
       <div className="product-image large"><img src={product.image_url || '/images/banana-large.svg'} alt={product.name} /></div>
@@ -25,11 +27,11 @@ export default function ProductPage() {
         <h1>{product.name}</h1>
         <p>{product.description}</p>
         <p className="price">{formatCurrency(product.price)}</p>
-        <p>{product.stock} verfügbar</p>
+        <p>{soldOut ? 'Ausverkauft' : product.stock + ' verfügbar'}</p>
         <label className="field-label">Menge
-          <input type="number" min="1" max={product.stock} value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+          <input type="number" min="1" max={product.stock} disabled={soldOut} value={quantity} onChange={(e) => setQuantity(e.target.value)} />
         </label>
-        <button className="button" onClick={() => { add(product, quantity); navigate('/cart'); }}>In den Warenkorb</button>
+        <button className="button" disabled={soldOut} onClick={() => { add(product, quantity); navigate('/cart'); }}>{soldOut ? 'Ausverkauft' : 'In den Warenkorb'}</button>
       </div>
     </section>
   );
