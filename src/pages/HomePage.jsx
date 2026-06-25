@@ -7,6 +7,7 @@ import { useCart } from '../components/CartProvider.jsx';
 export default function HomePage() {
   const [products, setProducts] = useState([]);
   const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('all');
   const { add } = useCart();
 
   useEffect(() => {
@@ -15,9 +16,15 @@ export default function HomePage() {
     });
   }, []);
 
+  const categories = Array.from(
+    new Map(products.map((p) => [p.categories?.slug, p.categories]).filter(([slug]) => slug)).values()
+  );
+
   const visible = products.filter((p) => {
     const text = (p.name + ' ' + p.description).toLowerCase();
-    return p.active && text.includes(query.toLowerCase());
+    const matchesText = text.includes(query.toLowerCase());
+    const matchesCategory = category === 'all' || p.categories?.slug === category;
+    return p.active && matchesText && matchesCategory;
   });
 
   return (
@@ -29,21 +36,28 @@ export default function HomePage() {
       </section>
       <section className="filters">
         <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Produkt suchen" />
+        <select value={category} onChange={(e) => setCategory(e.target.value)} aria-label="Kategorie filtern">
+          <option value="all">Alle Kategorien</option>
+          {categories.map((c) => <option key={c.slug} value={c.slug}>{c.name}</option>)}
+        </select>
       </section>
       <section className="product-grid">
-        {visible.map((p) => (
-          <article className="product-card" key={p.id}>
-            <div className="product-image"><img src={p.image_url || '/images/banana-large.svg'} alt={p.name} /></div>
-            <p className="category-label">{p.categories?.name}</p>
-            <h2>{p.name}</h2>
-            <p>{p.description}</p>
-            <div className="product-meta"><b>{formatCurrency(p.price)}</b><span>{p.stock} verfügbar</span></div>
-            <div className="button-row">
-              <Link className="button ghost" to={'/product/' + p.id}>Ansehen</Link>
-              <button className="button" onClick={() => add(p)}>In den Warenkorb</button>
-            </div>
-          </article>
-        ))}
+        {visible.map((p) => {
+          const soldOut = Number(p.stock) <= 0;
+          return (
+            <article className="product-card" key={p.id}>
+              <div className="product-image"><img src={p.image_url || '/images/banana-large.svg'} alt={p.name} /></div>
+              <p className="category-label">{p.categories?.name}</p>
+              <h2>{p.name}</h2>
+              <p>{p.description}</p>
+              <div className="product-meta"><b>{formatCurrency(p.price)}</b><span>{soldOut ? 'Ausverkauft' : p.stock + ' verfügbar'}</span></div>
+              <div className="button-row">
+                <Link className="button ghost" to={'/product/' + p.id}>Ansehen</Link>
+                <button className="button" disabled={soldOut} onClick={() => add(p)}>{soldOut ? 'Ausverkauft' : 'In den Warenkorb'}</button>
+              </div>
+            </article>
+          );
+        })}
       </section>
     </>
   );
