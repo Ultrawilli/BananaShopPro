@@ -20,10 +20,10 @@ export default function Header() {
       </Link>
       <nav className="main-nav">
         <NavLink to="/">Shop</NavLink>
-        <NavLink to="/cart">Cart ({count})</NavLink>
-        {user && <NavLink to="/orders">Orders</NavLink>}
-        {isAdmin && <NavLink to="/admin/products">Admin</NavLink>}
-        {isAdmin && <NavLink to="/admin/orders">All orders</NavLink>}
+        <NavLink to="/cart">Warenkorb ({count})</NavLink>
+        {user && <NavLink to="/orders">Meine Bestellungen</NavLink>}
+        {isAdmin && <NavLink to="/admin/products">Produkte verwalten</NavLink>}
+        {isAdmin && <NavLink to="/admin/orders">Alle Bestellungen</NavLink>}
         {user ? <button onClick={logout}>Logout</button> : <NavLink to="/login">Login</NavLink>}
       </nav>
     </header>
