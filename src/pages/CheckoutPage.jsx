@@ -11,12 +11,17 @@ export default function CheckoutPage() {
   const [status, setStatus] = useState('');
   const [guestName, setGuestName] = useState('');
   const [guestEmail, setGuestEmail] = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
 
   const orderItems = cart.items.map((item) => ({ product_id: item.product_id, quantity: item.quantity }));
 
-  async function buyAsUser() {
+  async function buyAsUser(event) {
+    event.preventDefault();
     setStatus('Bestellung wird gespeichert...');
-    const { data, error } = await supabase.rpc('create_order', { items: orderItems });
+    const { data, error } = await supabase.rpc('create_order', {
+      items: orderItems,
+      delivery_address: deliveryAddress
+    });
     if (error) { setStatus('Fehler: ' + error.message); return; }
     cart.clear();
     setStatus('Bestellung abgeschlossen. Nummer: ' + data);
@@ -28,7 +33,8 @@ export default function CheckoutPage() {
     const { data, error } = await supabase.rpc('create_guest_order', {
       items: orderItems,
       guest_email: guestEmail,
-      guest_name: guestName || 'Gast'
+      guest_name: guestName || 'Gast',
+      delivery_address: deliveryAddress
     });
     if (error) { setStatus('Fehler: ' + error.message); return; }
     cart.clear();
@@ -41,10 +47,14 @@ export default function CheckoutPage() {
       <p>Gesamtsumme: <b>{formatCurrency(cart.total)}</b></p>
 
       {user ? (
-        <>
+        <form className="guest-form" onSubmit={buyAsUser}>
           <p>Du bist angemeldet und kannst die Bestellung deinem Kundenkonto zuordnen.</p>
-          <button className="button" disabled={cart.items.length === 0} onClick={buyAsUser}>Bestellung abschließen</button>
-        </>
+          <label className="field-label">
+            Lieferadresse
+            <textarea value={deliveryAddress} onChange={(e) => setDeliveryAddress(e.target.value)} placeholder="Name, Straße, PLZ und Ort" required />
+          </label>
+          <button className="button" disabled={cart.items.length === 0}>Bestellung abschließen</button>
+        </form>
       ) : (
         <>
           <p>Du kannst dich anmelden oder die Bestellung als Gast abschließen.</p>
@@ -59,6 +69,10 @@ export default function CheckoutPage() {
             <label className="field-label">
               E-Mail für die Bestellung
               <input type="email" value={guestEmail} onChange={(e) => setGuestEmail(e.target.value)} placeholder="gast@example.test" required />
+            </label>
+            <label className="field-label">
+              Lieferadresse
+              <textarea value={deliveryAddress} onChange={(e) => setDeliveryAddress(e.target.value)} placeholder="Name, Straße, PLZ und Ort" required />
             </label>
             <button className="button" disabled={cart.items.length === 0}>Als Gast bestellen</button>
           </form>
