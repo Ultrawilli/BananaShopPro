@@ -26,9 +26,6 @@ export default function ImprintPage() {
         Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:<br />
         Max Mustermann, Musterstraße 12, 12345 Musterstadt
       </p>
-      <p className="notice">
-        Hinweis: Dieses Impressum ist ein Platzhalter für das Prüfungsprojekt und muss vor echter Veröffentlichung durch korrekte Angaben ersetzt werden.
-      </p>
     </section>
   );
 }
